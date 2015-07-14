@@ -1,0 +1,11 @@
+<a> sandwich</a> --> change innerHTML
+<input         > --> change value
+
+WINDOW ONLOAD VERSIONS
+
+A. window.onload = function(){ }
+B. window.addEventListener('load', function(){
+   });
+
+
+

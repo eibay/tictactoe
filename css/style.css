@@ -1,0 +1,21 @@
+body{
+  background-color: black;
+}
+
+.matrix{
+  background-color: brown;
+  height: 200px;
+  width: 200px;
+  display: inline-block;
+
+}
+#main{
+  max-width: 1000px;
+  background-color: gray;
+}
+
+#board{
+  max-width: 610px;
+  background-color: white;
+  margin: 0 auto;
+}
