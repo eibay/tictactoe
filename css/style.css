@@ -3,12 +3,36 @@ body{
 }
 
 .matrix{
-  background-color: brown;
+  background-color: green;
   height: 200px;
   width: 200px;
   display: inline-block;
 
 }
+.matrix-init{
+  background-color: orange;
+  height: 200px;
+  width: 200px;
+  display: inline-block;
+
+}
+
+.board .matrix-set-p1{
+  background-color: red;
+  height: 200px;
+  width: 200px;
+  display: inline-block;
+
+}
+
+.board .matrix-set-p2{
+  background-color: blue;
+  height: 200px;
+  width: 200px;
+  display: inline-block;
+
+}
+
 #main{
   max-width: 1000px;
   background-color: gray;

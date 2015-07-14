@@ -1,7 +1,0 @@
-var users = {
-  user1: {
-    
-  }
-
-
-}

@@ -8,4 +8,7 @@ B. window.addEventListener('load', function(){
    });
 
 
+_.each(array, function(elem, index, arr))
+
+
 
