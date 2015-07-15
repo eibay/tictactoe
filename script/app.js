@@ -98,44 +98,42 @@ var game = {
       return columnOut;//default to false!
   },//end of checkCol
 
-  //nty
+  //16Jul15
+  checkDiagLine: function(arr, rev){
+    var diagOut = false;
+    var diagArr = [];
+    var flatArr = [];//created 9 elements: from 3x3 matrix
+    var len = (game.boardSize * game.boardSize);
+    var stepCount = (game.boardSize + 1);
+    
+    if (rev === true){
+      arr = arr.reverse();
+      flatArr = _.flatten(arr);
+    }else{
+      flatArr = _.flatten(arr);
+    }
+
+    for (var j = 0; j < len; j += stepCount){
+      diagArr.push(flatArr[j]);
+    } //end of for    
+    diagOut = game.checkLineMove(diagArr);
+    //console.log("FlatArr: " + flatArr);  
+    return diagOut;
+  },//end of checkDiagLine
+
+  //16Jul15
   checkDiag: function(arr){
-    var diagArrLR = [];
-    var diagArrRL = [];
-    var flatArrLR = [];
-    var flatArrRL = [];
     var diagOutLR = false;
     var diagOutRL = false;
-    var len = (game.boardSize * game.boardSize);
-    var stepCount = (game.boardSize + 1); //same with decrement but opposite!
-    
-    //check top-left to bottom-right diagonal
-    flatArrLR = _.flatten(arr); //created 9 elements: from 3x3 matrix
-    for (var j = 0; j < len; j += stepCount){
-      diagArrLR.push(flatArrLR[j]);
-    } //end of for    
-    diagOutLR = game.checkLineMove(diagArrLR);
 
-    //check top-right to bottom-left diagonal
-    flatArrRL = _.flatten(arr); //created 9 elements: from 3x3 matrix
-    for (var i = len-1; i <= 0; i -= stepCount){
-      diagArrRL.push(flatArrRL[i]);
-    } //end of for
-    diagOutRL = game.checkLineMove(diagArrRL);
+    diagOutLR = game.checkDiagLine(arr, false);
+    diagOutRL = game.checkDiagLine(arr, true);
 
-      // //default to false!
-      // if ((diagOutRL || diagOutLR) === true){
-      //   console.log("true");
-      //   return true;
-      // }else{
-      //   console.log("false");
-      //   return false;
-      // }
+    return (diagOutRL || diagOutLR || false);
+
   }, //end of checkDiag
 
-
 //------------------------------------------
-
 
   //nty
   checkWin: function(){
