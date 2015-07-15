@@ -101,21 +101,33 @@ var game = {
   //nty
   checkDiag: function(arr){
     var diagArr = [];
-    var diagOut = false;
+    var flatArr = [];
+    var diagOutLR = false;
+    var diagOutRL = false;
+    var len = (game.boardSize * game.boardSize);
+    var increment = (game.boardSize + 1); //same with decrement but opposite!
+    //check top-left to bottom-right diagonal
+      flatArr = _.flatten(arr); //created 9 elements: from 3x3 matrix
+      for (var j = 0; j < len; j += increment){
+        diagArr.push(flatArr[j]);
+        diagOutLR = game.checkLineMove(diagArr);
+      } //end of for
 
-    for (var i = 0; i <= game.boardSize; i++){
+    //check top-right to bottom-left diagonal
+      flatArr = _.flatten(arr); //created 9 elements: from 3x3 matrix
+      for (var j = 0; j < len; j -= increment){
+        diagArr.push(flatArr[j]);
+        diagOutRL = game.checkLineMove(diagArr);
+      } //end of for
 
-    //check top-left, bottom-right
-      //column builder
-      _.each(arr, function(elem1, index){
-        diagArr.push(elem1[i]);
-      }); //end of column builder
-
-    //check top-right, bottom-left
-
-    } //end of for
       //default to false!
-      return diagOut;
+      if ((diagOutRL || diagOutLR) === true){
+        console.log("true");
+        return true;
+      }else{
+        console.log("false");
+        return false;
+      }
   }, //end of checkDiag
 
 
