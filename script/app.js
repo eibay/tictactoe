@@ -65,7 +65,7 @@ var game = {
     _.each(arr, function(elem){
       var result = game.checkLineMove(elem);
         if (result === true){
-          output = true;
+          rowOut = true;
           return rowOut;
         }
     });
@@ -100,34 +100,37 @@ var game = {
 
   //nty
   checkDiag: function(arr){
-    var diagArr = [];
-    var flatArr = [];
+    var diagArrLR = [];
+    var diagArrRL = [];
+    var flatArrLR = [];
+    var flatArrRL = [];
     var diagOutLR = false;
     var diagOutRL = false;
     var len = (game.boardSize * game.boardSize);
-    var increment = (game.boardSize + 1); //same with decrement but opposite!
+    var stepCount = (game.boardSize + 1); //same with decrement but opposite!
+    
     //check top-left to bottom-right diagonal
-      flatArr = _.flatten(arr); //created 9 elements: from 3x3 matrix
-      for (var j = 0; j < len; j += increment){
-        diagArr.push(flatArr[j]);
-        diagOutLR = game.checkLineMove(diagArr);
-      } //end of for
+    flatArrLR = _.flatten(arr); //created 9 elements: from 3x3 matrix
+    for (var j = 0; j < len; j += stepCount){
+      diagArrLR.push(flatArrLR[j]);
+    } //end of for    
+    diagOutLR = game.checkLineMove(diagArrLR);
 
     //check top-right to bottom-left diagonal
-      flatArr = _.flatten(arr); //created 9 elements: from 3x3 matrix
-      for (var j = 0; j < len; j -= increment){
-        diagArr.push(flatArr[j]);
-        diagOutRL = game.checkLineMove(diagArr);
-      } //end of for
+    flatArrRL = _.flatten(arr); //created 9 elements: from 3x3 matrix
+    for (var i = len-1; i <= 0; i -= stepCount){
+      diagArrRL.push(flatArrRL[i]);
+    } //end of for
+    diagOutRL = game.checkLineMove(diagArrRL);
 
-      //default to false!
-      if ((diagOutRL || diagOutLR) === true){
-        console.log("true");
-        return true;
-      }else{
-        console.log("false");
-        return false;
-      }
+      // //default to false!
+      // if ((diagOutRL || diagOutLR) === true){
+      //   console.log("true");
+      //   return true;
+      // }else{
+      //   console.log("false");
+      //   return false;
+      // }
   }, //end of checkDiag
 
 
