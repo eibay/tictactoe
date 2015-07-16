@@ -1,23 +1,41 @@
 body{
   background-color: black;
+  font-family: helvetica;
+}
+
+h1{
+  font-size: 60px;
+}
+
+h2{
+  font-size: 50px;
+  text-align: center;
 }
 
 .matrix{
-  background-color: green;
-  height: 200px;
-  width: 200px;
+  text-align: center;
+  font-size: 150px; 
+  /*background-color: green;*/
+  height: 198px;
+  width: 198px;
   display: inline-block;
+  /*border: 1px solid gray;*/
+  background:url('images/chrome.jpg');
+  background-repeat: no-repeat;
+  background-size: 90% auto;
+  background-position: center center;
+  background-attachment: fixed;
 
 }
+
 .matrix-init{
   background-color: orange;
   height: 200px;
   width: 200px;
   display: inline-block;
-
 }
 
-.board .matrix-set-p1{
+.board > .matrix-set-p1{
   background-color: red;
   height: 200px;
   width: 200px;
@@ -34,13 +52,37 @@ body{
 }
 
 #main{
-  max-width: 1000px;
-  background-color: gray;
+  max-width: 1200px;
+  background-image: url('images/square.jpg');
   margin: 0 auto;
+  position: relative;
+  
 }
 
 #board{
   max-width: 610px;
-  background-color: white;
   margin: 0 auto;
+  padding-top: 5px;
+  padding-left: 6px;
+}
+
+.profile {
+  /*float: left;*/
+  position: absolute;
+  width: 270px;
+  height: 500px;
+  margin: 0 auto;
+  background-color: rgba(230, 230, 230, 0.5);
+  text-align: center;
+}
+
+#player1{
+  top: 15px;
+  left: 15px;
+}
+
+#player2{
+  top: 15px;
+  right: 15px;
+
 }

@@ -7,11 +7,7 @@
 </head>
 <body>
   <div id="main">
-  <h2>Game On!</h2>
 
-  <!--r0c0  r0c1  r0c2
-      r1c0  r1c1  r1c2
-      r2c0  r2c1  r2c2 -->
     <div id="board">
       <div class="matrix" id='0' data-row="0" data-col="0"></div>
       <div class="matrix" id='1' data-row="0" data-col="1"></div>
@@ -24,6 +20,19 @@
       <div class="matrix" id='8' data-row="2" data-col="2"></div>
 
     </div> <!--end of board-->
+    
+    <div class="profile" id="player1">
+      <h1 class="name" id="p1-name"></h1>
+      <h1 class="score" id="p1-score">0</h1>
+      <h2 class="match" id="p1-match">"free"</h2>
+    </div>
+
+    <div class="profile" id="player2">
+      <h1 class="name" id="p2-name"></h1>
+      <h1 class="score" id="p2-score">0</h1>
+      <h2 class="match" id="p2-match">"slave"</h2>
+    </div>
+
   </div> <!--end of main-->
   <script type="text/javascript" src="script/underscore.js"></script>
   <script type="text/javascript" src="script/jquery.js"></script>  

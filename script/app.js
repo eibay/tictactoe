@@ -6,19 +6,20 @@ var game = {
 
   boardSize: 3,
 
-  player1: {score: 0, name: '', avatar: '', move: 0},
+  player1: {score: 0, name: 'FREEDOM', avatar: '', move: 0},
 
-  player2: {score: 0, name: '', avatar: '', move: 2},
+  player2: {score: 0, name: 'BONDAGE', avatar: '', move: 2},
 
   gameScore: 0,
 
-  counter: 0,
+  counter: 2,
 
   setRound: 5,
 
   //15Jul15
   setPlayer: function(){
-    //player setup: name, avatar, preferences etc.
+    $('p1-name').html(game.player1.name);
+    $('p2-name').html(game.player2.name);
 
   },//end setPlayer
 
@@ -35,7 +36,6 @@ var game = {
         });
     });
   },//end initBoard
-
 
   //15Jul15
   checkLineSum: function(arr){
@@ -115,12 +115,10 @@ var game = {
     }else{
       flatArr = _.flatten(newArr);
     }
-
     for (var j = 0; j < len; j += stepCount){
       diagArr.push(flatArr[j]);
     } //end of for    
-    diagOut = game.checkLineMove(diagArr);
-    //console.log("FlatArr: " + flatArr);  
+    diagOut = game.checkLineMove(diagArr); 
     return diagOut;
   },//end of checkDiagLine
 
@@ -154,19 +152,34 @@ var game = {
   updateScore: function(player){
     if (player === game.player1){
       game.player1.score += 1;
+
     }else{
       game.player2.score += 1;
     }
+    console.log("P1"+ game.player1.score + "vs " + "P2:" + game.player2.score);
+  },
+
+  renderMatchWin: function(player){
+    if (player === player1){
+      $('#p1-score').html(game.player1.score);
+      $('#p1-match').html(game.player1.name + " WINS!")
+    }else{
+      $('#p2-score').html(game.player2.score);
+      $('#p2-match').html(game.player2.name + " WINS!")
+    }
+
   },
 
   //nty
   checkWinner: function(){
     if (game.player1.score === game.setRound){
+      //console.log(game.player1.name)
       return game.player1.name;
     }else if (game.player2.score === game.setRound){
+      //console.log(game.player2.name);
       return game.player2.name;
     }else{
-      //do nothing.
+      return ("Game In Progress");
     }
   },
 
@@ -174,23 +187,23 @@ var game = {
     var playerMove = game.checkRound(arr);
     if (playerMove === true){
       game.updateScore(player);
-      game.checkWinner();
+      game.renderMatchWin(player);
+      // return (game.checkWinner());
     }
   }, //end of playerMove
 
 
-  renderTile: function(id, player){
-    if (player === 2){
-      $(this).html('x');
-    }else{
-      $(this).html('o');
-    }
-  },
-
+  // renderTile: function(id, player){
+  //   if (player === 2){
+  //     $(this).html('x');
+  //   }else{
+  //     $(this).html('o');
+  //   }
+  // },
 
   init: function(){
     game.initBoard(game.boardValues); //working
-    game.setPlayer(); //nty
+    game.setPlayer();
     console.log("Init Completed!");   
   }
 
@@ -202,7 +215,6 @@ window.onload = function() {
 
   //15Jul
   game.init();
-
 
   //Declare global array data
   var arr = game.boardValues;
@@ -223,14 +235,35 @@ window.onload = function() {
 
     var tileName = ($(this).attr('id'));
     console.log("tileName: " + tileName);
-    //marking starts here..
-    game.renderTile(tileName, player);
 
+    //marking starts here..
+    if (player === 2){
+      $(this).html('<img src="css/images/safari.png" width="100%", height="100%">');
+    }else{
+      $(this).html('<img src="css/images/firefox.jpg" width="100%", height="100%">');
+    }
+    var display = game.playerMove(player, game.boardValues);
+    console.log(game.boardValues);
+    console.log(display);
 
   });//end of function 
 
-
 } //end of window onload
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -244,10 +277,6 @@ window.onload = function() {
   //     return tileValue;
   //   });
   // }
-
-
-
-
 
 // $('<div>').attr({
 //   'data-row': ,
