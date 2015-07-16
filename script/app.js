@@ -12,6 +12,8 @@ var game = {
 
   gameScore: 0,
 
+  counter: 0,
+
   setRound: 5,
 
   //15Jul15
@@ -100,6 +102,7 @@ var game = {
 
   //16Jul15
   checkDiagLine: function(arr, rev){
+    var newArr = arr;
     var diagOut = false;
     var diagArr = [];
     var flatArr = [];//created 9 elements: from 3x3 matrix
@@ -107,10 +110,10 @@ var game = {
     var stepCount = (game.boardSize + 1);
     
     if (rev === true){
-      arr = arr.reverse();
-      flatArr = _.flatten(arr);
+      newArr = arr.reverse();
+      flatArr = _.flatten(newArr);
     }else{
-      flatArr = _.flatten(arr);
+      flatArr = _.flatten(newArr);
     }
 
     for (var j = 0; j < len; j += stepCount){
@@ -136,10 +139,10 @@ var game = {
 //------------------------------------------
 
   //nty
-  checkWin: function(){
-    var row = game.checkRow();
-    var col = game.checkCol();
-    var cross = game.checkDiag();
+  checkRound: function(arr){
+    var row = game.checkRow(arr);
+    var col = game.checkCol(arr);
+    var cross = game.checkDiag(arr);
     if ((row || col || cross) === true){
       return true;
     }else{
@@ -149,16 +152,15 @@ var game = {
 
   //nty
   updateScore: function(player){
-    if (player === player1){
+    if (player === game.player1){
       game.player1.score += 1;
     }else{
       game.player2.score += 1;
     }
-
   },
 
   //nty
-  declareWinner: function(){
+  checkWinner: function(){
     if (game.player1.score === game.setRound){
       return game.player1.name;
     }else if (game.player2.score === game.setRound){
@@ -168,15 +170,31 @@ var game = {
     }
   },
 
-  init: function(){
+  playerMove: function (player, arr){
+    var playerMove = game.checkRound(arr);
+    if (playerMove === true){
+      game.updateScore(player);
+      game.checkWinner();
+    }
+  }, //end of playerMove
 
+
+  renderTile: function(id, player){
+    if (player === 2){
+      $(this).html('x');
+    }else{
+      $(this).html('o');
+    }
+  },
+
+
+  init: function(){
     game.initBoard(game.boardValues); //working
     game.setPlayer(); //nty
     console.log("Init Completed!");   
   }
 
 } //end of game
-
 
 window.onload = function() {
 
@@ -186,15 +204,97 @@ window.onload = function() {
   game.init();
 
 
+  //Declare global array data
+  var arr = game.boardValues;
+
+  $('#board').on('click', '.matrix', function(){
+    //set up player alternate access
+    var player = 1;
+    if (game.counter % 2 === 0){
+      player = game.player1.move;
+    }else{
+      player = game.player2.move;
+    }
+    var row = $(this).attr('data-row');
+    var col = $(this).attr('data-col');
+    console.log(row + "," + col);
+    game.setTile(row, col, player);
+    game.counter++;
+
+    var tileName = ($(this).attr('id'));
+    console.log("tileName: " + tileName);
+    //marking starts here..
+    game.renderTile(tileName, player);
+
+
+  });//end of function 
+
+
 } //end of window onload
 
 
-  // //nty
-  // updateBoard: function(value, row, col){
-  //   var location = row + col;
-  //   _.each(game.board, function(elem, index){
-  //     if (elem === location){
-  //       game.boardValues[index] = value;
-  //     }
+
+  //Player1 move
+    //mark the tile
+
+  // var moveSelect = function(id){
+  //     $( id ).click(function() {
+  //     // $( this ).slideUp();
+  //     var tileValue = ($(this).attr('value'));
+  //     return tileValue;
   //   });
-  // },
+  // }
+
+
+
+
+
+// $('<div>').attr({
+//   'data-row': ,
+//   'data-col': ,
+//   class: 'matrix'
+// });
+
+
+
+
+  // var tileSelected = document.getElementById('r0c0');
+  // var tile = tileSelected.getAttribute('value');
+
+  // tileSelected.addEventListener('click', )
+
+
+  //   game.setTile(row, col, game.player1.move);
+  //   //check the move
+  //   game.playerMove(game.player1, arr);
+
+
+  // //Player2 move
+  //   game.playerMove(game.player2, arr);
+
+
+
+
+  /*Play sequence
+
+    Player1 select the tile
+      mark the tile/change image/
+        selected tile to be one-time selectable
+    Update board array
+      :Check move
+
+    Enable Player2 to select the tile
+      :Check move 
+
+    :Check move
+      if win, update score
+          if win < round
+              play another set
+  */
+
+
+/* Other Features
+  play against computer logic
+
+
+ */
