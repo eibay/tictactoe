@@ -283,7 +283,7 @@ window.onload = function() {
     }
     game.playerMove(playerName, arrBoard);
 
-    if ((game.moveCounter === 9) && ((game.player1.score < game.setRound) || (game.player2.score < game.setRound))){
+    if ((game.moveCounter === 9) && ((game.player1.score < game.setRound) && (game.player2.score < game.setRound))){
       $('.gameWinner').html("<button>It's a DRAW</button>");
       $('.gameWinner').show(1000);
     }
