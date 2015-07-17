@@ -240,10 +240,6 @@ var game = {
     game.moveCounter = 0;
   },
 
-  showPlayAgain: function(){
-
-  }
-
   init: function(){
     game.initBoard(game.boardValues); //working
     game.setPlayer();   
@@ -298,7 +294,7 @@ window.onload = function() {
       $('.gameWinner').hide(1000);
   });
 
-  if ((moveCounter === setRound) && ((game.player1.score === setRound) || game.player2.score === setRound))){
+  if ((game.moveCounter === game.setRound) && ((game.player1.score === game.setRound) || (game.player2.score === game.setRound))){
     $('.gameWinner').show(1000);
     $('.gameWinner').html("It's a DRAW");
   }
