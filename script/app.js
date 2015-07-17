@@ -283,6 +283,11 @@ window.onload = function() {
     }
     game.playerMove(playerName, arrBoard);
 
+    if ((game.moveCounter === 9) && ((game.player1.score < game.setRound) || (game.player2.score < game.setRound))){
+      $('.gameWinner').html("It's a DRAW");
+      $('.gameWinner').show(1000);
+    }
+
   });//end of board display  
 
   $( ".resetBtn" ).click(function() {
@@ -294,10 +299,6 @@ window.onload = function() {
       $('.gameWinner').hide(1000);
   });
 
-  if ((game.moveCounter === game.setRound) && ((game.player1.score === game.setRound) || (game.player2.score === game.setRound))){
-    $('.gameWinner').show(1000);
-    $('.gameWinner').html("It's a DRAW");
-  }
 
 } //end of window onload
 
