@@ -6,20 +6,22 @@ var game = {
 
   boardSize: 3,
 
-  player1: {score: 0, name: 'FREEDOM', avatar: '', move: 0},
+  player1: {score: 0, name: 'SPIRIT', avatar: '', move: 0},
 
-  player2: {score: 0, name: 'BONDAGE', avatar: '', move: 2},
+  player2: {score: 0, name: 'FLESH', avatar: '', move: 2},
 
   gameScore: 0,
 
-  counter: 2,
+  counter: 0,
 
-  setRound: 5,
+  setRound: 3,
+
+  moveCounter: 0,
 
   //15Jul15
   setPlayer: function(){
-    $('p1-name').html(game.player1.name);
-    $('p2-name').html(game.player2.name);
+    $('#p1-name').html(game.player1.name);
+    $('#p2-name').html(game.player2.name);
 
   },//end setPlayer
 
@@ -100,7 +102,7 @@ var game = {
       return columnOut;//default to false!
   },//end of checkCol
 
-  //16Jul15
+  //DIAGONAL CHECKING
   checkDiagLine: function(arr, rev){
     var newArr = arr;
     var diagOut = false;
@@ -110,9 +112,10 @@ var game = {
     var stepCount = (game.boardSize + 1);
     
     if (rev === true){
-      newArr = arr.reverse();
+      newArr = newArr.reverse();
       flatArr = _.flatten(newArr);
     }else{
+      newArr = newArr.reverse();
       flatArr = _.flatten(newArr);
     }
     for (var j = 0; j < len; j += stepCount){
@@ -124,19 +127,18 @@ var game = {
 
   //16Jul15
   checkDiag: function(arr){
+    var newArr = arr;
     var diagOutLR = false;
     var diagOutRL = false;
 
-    diagOutLR = game.checkDiagLine(arr, false);
-    diagOutRL = game.checkDiagLine(arr, true);
+    diagOutRL = game.checkDiagLine(newArr, true);
+    diagOutLR = game.checkDiagLine(newArr, false);
 
     return (diagOutRL || diagOutLR || false);
 
   }, //end of checkDiag
 
-//------------------------------------------
-
-  //nty
+  //
   checkRound: function(arr){
     var row = game.checkRow(arr);
     var col = game.checkCol(arr);
@@ -148,66 +150,107 @@ var game = {
     }
   }, //end checkWin
 
-  //nty
-  updateScore: function(player){
-    if (player === game.player1){
+  //
+  updateScore: function(playerName){
+    if (playerName === game.player1.name){
       game.player1.score += 1;
 
     }else{
       game.player2.score += 1;
     }
-    console.log("P1"+ game.player1.score + "vs " + "P2:" + game.player2.score);
   },
 
-  renderMatchWin: function(player){
-    if (player === player1){
+  renderMatchWin: function(playerName){
+    if (playerName === game.player1.name){
       $('#p1-score').html(game.player1.score);
-      $('#p1-match').html(game.player1.name + " WINS!")
+      $('#p1-match').html(playerName + " WINS!");
+      // $('h6').html("PRESS GAME TO START AGAIN");
+      $('#p2-reset').html("<button>PLAY AGAIN</button>");
+      game.counter = 1; //switches starting player2
+      if (game.player1.score < game.setRound){
+        $( '#p2-reset' ).show( 1000 );
+      } 
+
     }else{
       $('#p2-score').html(game.player2.score);
-      $('#p2-match').html(game.player2.name + " WINS!")
+      $('#p2-match').html(playerName + " WINS!");
+      // $('h6').html("<button>PRESS GAME TO START AGAIN</button>");
+      $('#p1-reset').html("<button>PLAY AGAIN</button>");
+      game.counter = 0; //switches starting player1
+      if (game.player2.score < game.setRound){  
+        $( '#p1-reset' ).show( 1000 );
+      }
     }
 
+  },
+
+  renderGameWin: function(playerName){
+    $('.gameWinner').html("<button>" + playerName + " WINS! Play Again!" + "<button>");
+    // $( '.gameWinner' ).click(function(){
+    //   game.gameReset();
+    // });
   },
 
   //nty
   checkWinner: function(){
     if (game.player1.score === game.setRound){
       //console.log(game.player1.name)
-      return game.player1.name;
+      game.renderGameWin(game.player1.name);
+      //return game.player1.name;
     }else if (game.player2.score === game.setRound){
       //console.log(game.player2.name);
-      return game.player2.name;
+      // return game.player2.name;
+      game.renderGameWin(game.player2.name);
     }else{
-      return ("Game In Progress");
+      //do nothing!
     }
   },
 
-  playerMove: function (player, arr){
+  playerMove: function (playerName, arr){
     var playerMove = game.checkRound(arr);
     if (playerMove === true){
-      game.updateScore(player);
-      game.renderMatchWin(player);
-      // return (game.checkWinner());
+      game.updateScore(playerName);
+      game.renderMatchWin(playerName);
+      game.checkWinner();
     }
   }, //end of playerMove
 
+  gameReset: function (){
+    $('div.matrix').html('');
+    game.init();
+    arrBoard = game.boardValues;
+    $('#p1-match').html("free");
+    $('#p2-match').html("slave");
+    $( '.resetBtn' ).hide( 1000 );
+    $( '.div.matrix' ).hide( 1000 );
+    game.score = 0;
+    $('.score').html("0");
+    game.player1.score = 0;
+    game.player2.score = 0;
+    game.moveCounter = 0;
+  },
 
-  // renderTile: function(id, player){
-  //   if (player === 2){
-  //     $(this).html('x');
-  //   }else{
-  //     $(this).html('o');
-  //   }
-  // },
+  matchReset: function(){
+    $('div.matrix').html('');   //clears board display
+    game.init();                // clears board array
+    arrBoard = game.boardValues;
+    $('#p1-match').html("free");
+    $('#p2-match').html("slave");
+    $( '.resetBtn' ).hide( 1000 );
+    game.moveCounter = 0;
+  },
+
+  showPlayAgain: function(){
+
+  }
 
   init: function(){
     game.initBoard(game.boardValues); //working
-    game.setPlayer();
-    console.log("Init Completed!");   
+    game.setPlayer();   
   }
 
 } //end of game
+
 
 window.onload = function() {
 
@@ -217,36 +260,48 @@ window.onload = function() {
   game.init();
 
   //Declare global array data
-  var arr = game.boardValues;
+  var arrBoard = game.boardValues;
 
-  $('#board').on('click', '.matrix', function(){
+   $('#board').on('click', '.matrix', function(){
     //set up player alternate access
-    var player = 1;
+    game.moveCounter++; //tracks the number of tile clicks
+    var playerNum = 1;
     if (game.counter % 2 === 0){
-      player = game.player1.move;
+      playerNum = game.player1.move; //0 player1
+      playerName = game.player1.name;
     }else{
-      player = game.player2.move;
+      playerNum = game.player2.move; //2 player2
+      playerName = game.player2.name;
     }
-    var row = $(this).attr('data-row');
-    var col = $(this).attr('data-col');
-    console.log(row + "," + col);
-    game.setTile(row, col, player);
     game.counter++;
 
-    var tileName = ($(this).attr('id'));
-    console.log("tileName: " + tileName);
+    var row = $(this).attr('data-row');
+    var col = $(this).attr('data-col');
+    game.setTile(row, col, playerNum);
 
     //marking starts here..
-    if (player === 2){
+    if (playerNum === 0){
       $(this).html('<img src="css/images/safari.png" width="100%", height="100%">');
     }else{
       $(this).html('<img src="css/images/firefox.jpg" width="100%", height="100%">');
     }
-    var display = game.playerMove(player, game.boardValues);
-    console.log(game.boardValues);
-    console.log(display);
+    game.playerMove(playerName, arrBoard);
 
-  });//end of function 
+  });//end of board display  
+
+  $( ".resetBtn" ).click(function() {
+    game.matchReset();
+  });
+
+  $( '.gameWinner' ).click(function(){
+      game.gameReset();
+      $('.gameWinner').hide(1000);
+  });
+
+  if ((moveCounter === setRound) && ((game.player1.score === setRound) || game.player2.score === setRound))){
+    $('.gameWinner').show(1000);
+    $('.gameWinner').html("It's a DRAW");
+  }
 
 } //end of window onload
 
@@ -267,6 +322,26 @@ window.onload = function() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// $("#submit").one('click', function (event) {  
+//            event.preventDefault();
+//            //do something
+//            $(this).prop('disabled', true);
+//      });
   //Player1 move
     //mark the tile
 

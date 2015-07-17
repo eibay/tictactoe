@@ -28,28 +28,6 @@ h2{
 
 }
 
-.matrix-init{
-  background-color: orange;
-  height: 200px;
-  width: 200px;
-  display: inline-block;
-}
-
-.board > .matrix-set-p1{
-  background-color: red;
-  height: 200px;
-  width: 200px;
-  display: inline-block;
-
-}
-
-.board .matrix-set-p2{
-  background-color: blue;
-  height: 200px;
-  width: 200px;
-  display: inline-block;
-
-}
 
 #main{
   max-width: 1200px;
@@ -60,6 +38,7 @@ h2{
 }
 
 #board{
+  position: relative;
   max-width: 610px;
   margin: 0 auto;
   padding-top: 5px;
@@ -67,13 +46,39 @@ h2{
 }
 
 .profile {
-  /*float: left;*/
   position: absolute;
   width: 270px;
   height: 500px;
   margin: 0 auto;
   background-color: rgba(230, 230, 230, 0.5);
   text-align: center;
+}
+
+.avatar{
+  position:relative;
+  margin: 0 auto;
+
+
+}
+
+#p1-avatar{
+  width: 150px;
+  height: 150px;
+  background:url('images/safari.png');
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center center;
+  opacity: 0.5;
+}
+
+#p2-avatar{
+  width: 150px;
+  height: 150px;
+  background-image: url('images/firefox.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center center;
+  opacity: 0.5;
 }
 
 #player1{
@@ -86,3 +91,19 @@ h2{
   right: 15px;
 
 }
+
+button{
+  text-align: center;
+  font-size: 30px;
+  border: none;
+  background-color: rgba(100, 180, 250, 0.5);
+  position: relative;
+  /*width: 200px;*/
+}
+
+/*.gameWinner{
+  position: absolute;
+  top: 100px;
+  left: 100px;
+
+}*/
