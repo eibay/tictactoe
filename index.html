@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <title>Tic-Tac-Toe</title>
   <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script type="text/javascript" src="script/jquery.js"></script>
 </head>
 <body>
   <div id="main">
 
-    <div id="board">
+    <div id="board" style="display:none;">
       <div class="matrix" id='0' data-row="0" data-col="0"></div>
       <div class="matrix" id='1' data-row="0" data-col="1"></div>
       <div class="matrix" id='2' data-row="0" data-col="2"></div>
@@ -18,7 +19,7 @@
       <div class="matrix" id='6' data-row="2" data-col="0"></div>
       <div class="matrix" id='7' data-row="2" data-col="1"></div>
       <div class="matrix" id='8' data-row="2" data-col="2"></div>
-      <h6 class="gameWinner"></h6>
+      <div class="gameWinner"></div>
     </div> <!--end of board-->
     
     <div class="profile" id="player1">
@@ -41,7 +42,7 @@
 
   </div> <!--end of main-->
   <script type="text/javascript" src="script/underscore.js"></script>
-  <script type="text/javascript" src="script/jquery.js"></script>  
+    
   <script type="text/javascript" src="script/app.js"></script>
 </body>
 </html>

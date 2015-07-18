@@ -18,6 +18,8 @@ var game = {
 
   moveCounter: 0,
 
+  moves: [],
+
   //15Jul15
   setPlayer: function(){
     $('#p1-name').html(game.player1.name);
@@ -145,6 +147,8 @@ var game = {
     var cross = game.checkDiag(arr);
     if ((row || col || cross) === true){
       return true;
+    }else if (game.moves.length === 9){
+      return "draw";
     }else{
       return false;
     }
@@ -164,8 +168,8 @@ var game = {
     if (playerName === game.player1.name){
       $('#p1-score').html(game.player1.score);
       $('#p1-match').html(playerName + " WINS!");
-      // $('h6').html("PRESS GAME TO START AGAIN");
-      $('#p2-reset').html("<button>PLAY AGAIN</button>");
+      $('#p2-reset').html("<button class='playAgain'>PLAY AGAIN</button>");
+      $('#p2-reset').focus();
       game.counter = 1; //switches starting player2
       if (game.player1.score < game.setRound){
         $( '#p2-reset' ).show( 1000 );
@@ -174,8 +178,8 @@ var game = {
     }else{
       $('#p2-score').html(game.player2.score);
       $('#p2-match').html(playerName + " WINS!");
-      // $('h6').html("<button>PRESS GAME TO START AGAIN</button>");
-      $('#p1-reset').html("<button>PLAY AGAIN</button>");
+      $('#p1-reset').html("<button class='playAgain'>PLAY AGAIN</button>");
+      $('#p1-reset').focus();
       game.counter = 0; //switches starting player1
       if (game.player2.score < game.setRound){  
         $( '#p1-reset' ).show( 1000 );
@@ -185,21 +189,23 @@ var game = {
   },
 
   renderGameWin: function(playerName){
-    $('.gameWinner').html("<button>" + playerName + " WINS! Play Again!" + "<button>");
-    // $( '.gameWinner' ).click(function(){
-    //   game.gameReset();
-    // });
+    $('.gameWinner').html
+     ("<div>CLICK HERE FOR NEXT ROUND</div>");
+    $('.gameWinner').show(1000);
+    $('html, body').animate({ scrollTop: $('.matrix').offset().top }, 'slow');
+  },
+
+  renderDraw: function(){
+    $('.gameWinner').html("<div>IT'S A DRAW!</div><div><buttonclass='playAgain'>Play Again</button></div>");
+    $('.gameWinner').show(1000);
+
   },
 
   //nty
   checkWinner: function(){
     if (game.player1.score === game.setRound){
-      //console.log(game.player1.name)
       game.renderGameWin(game.player1.name);
-      //return game.player1.name;
     }else if (game.player2.score === game.setRound){
-      //console.log(game.player2.name);
-      // return game.player2.name;
       game.renderGameWin(game.player2.name);
     }else{
       //do nothing!
@@ -212,6 +218,10 @@ var game = {
       game.updateScore(playerName);
       game.renderMatchWin(playerName);
       game.checkWinner();
+    }else if (playerMove === "draw"){
+      game.renderDraw();
+    }else{
+      //continue playing..
     }
   }, //end of playerMove
 
@@ -228,12 +238,14 @@ var game = {
     game.player1.score = 0;
     game.player2.score = 0;
     game.moveCounter = 0;
+    game.moves = [];
   },
 
   matchReset: function(){
     $('div.matrix').html('');   //clears board display
     game.init();                // clears board array
     arrBoard = game.boardValues;
+    game.moves = [];
     $('#p1-match').html("free");
     $('#p2-match').html("slave");
     $( '.resetBtn' ).hide( 1000 );
@@ -258,30 +270,41 @@ window.onload = function() {
   //Declare global array data
   var arrBoard = game.boardValues;
 
-   $('#board').on('click', '.matrix', function(){
-    //set up player alternate access
-    game.moveCounter++; //tracks the number of tile clicks
-    var playerNum = 1;
-    if (game.counter % 2 === 0){
-      playerNum = game.player1.move; //0 player1
-      playerName = game.player1.name;
-    }else{
-      playerNum = game.player2.move; //2 player2
-      playerName = game.player2.name;
-    }
-    game.counter++;
 
-    var row = $(this).attr('data-row');
-    var col = $(this).attr('data-col');
-    game.setTile(row, col, playerNum);
+   $('#board').on('click', '.matrix', function(){
+    //prevention of double clicking.
+    var idClick = $(this).attr("id");
+  
 
     //marking starts here..
-    if (playerNum === 0){
-      $(this).html('<img src="css/images/safari.png" width="100%", height="100%">');
+    if ((_.indexOf(game.moves, idClick)) === -1){
+      //set up player alternate access
+      game.moveCounter++; //tracks the number of tile clicks
+      var playerNum = 1;
+      if (game.counter % 2 === 0){
+        playerNum = game.player1.move; //0 player1
+        playerName = game.player1.name;
+      }else{
+        playerNum = game.player2.move; //2 player2
+        playerName = game.player2.name;
+      }
+
+      var row = $(this).attr('data-row');
+      var col = $(this).attr('data-col');
+      game.setTile(row, col, playerNum);
+      game.counter++;
+      
+      if (playerNum === 0){
+        $(this).html('<img src="css/images/safari.png" width="100%", height="100%">');
+      }else{
+        $(this).html('<img src="css/images/firefox.jpg" width="100%", height="100%">');
+      }
+      game.moves.push(idClick);
+      game.playerMove(playerName, arrBoard);
+
     }else{
-      $(this).html('<img src="css/images/firefox.jpg" width="100%", height="100%">');
+      //do nothing since it's added already
     }
-    game.playerMove(playerName, arrBoard);
 
     if ((game.moveCounter === 9) && ((game.player1.score < game.setRound) && (game.player2.score < game.setRound))){
       $('.gameWinner').html("<button>It's a DRAW</button>");
@@ -290,21 +313,28 @@ window.onload = function() {
 
   });//end of board display  
 
-  $( ".resetBtn" ).click(function() {
+  $(".resetBtn" ).click(function() {
     game.matchReset();
   });
 
-  $( '.gameWinner' ).click(function(){
-      game.gameReset();
-      $('.gameWinner').hide(1000);
+  $('.gameWinner' ).click(function(){
+    game.gameReset();
+    $('.gameWinner').hide(1000);
   });
 
+<<<<<<< HEAD
+=======
+  //animates the slow appearance of the matrix board
+  $(document).ready(function(){
+ 
+    $('#board').fadeIn(4000).animate({
+      opacity: 0.8,
+    }, 3000 );
+ 
+  });
+>>>>>>> master
 
 } //end of window onload
-
-
-
-//added comment only
 
 
 
@@ -377,16 +407,13 @@ window.onload = function() {
 
 
   /*Play sequence
-
     Player1 select the tile
       mark the tile/change image/
         selected tile to be one-time selectable
     Update board array
       :Check move
-
     Enable Player2 to select the tile
       :Check move 
-
     :Check move
       if win, update score
           if win < round
@@ -396,6 +423,4 @@ window.onload = function() {
 
 /* Other Features
   play against computer logic
-
-
  */

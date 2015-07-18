@@ -15,17 +15,14 @@ h2{
 .matrix{
   text-align: center;
   font-size: 150px; 
-  /*background-color: green;*/
   height: 198px;
   width: 198px;
   display: inline-block;
-  /*border: 1px solid gray;*/
   background:url('images/chrome.jpg');
   background-repeat: no-repeat;
   background-size: 90% auto;
   background-position: center center;
   background-attachment: fixed;
-
 }
 
 
@@ -43,6 +40,7 @@ h2{
   margin: 0 auto;
   padding-top: 5px;
   padding-left: 6px;
+  opacity: 0;
 }
 
 .profile {
@@ -91,19 +89,30 @@ h2{
   right: 15px;
 
 }
-
-button{
+.playAgain{
   text-align: center;
   font-size: 30px;
   border: none;
   background-color: rgba(100, 180, 250, 0.5);
   position: relative;
-  /*width: 200px;*/
 }
 
-/*.gameWinner{
-  position: absolute;
-  top: 100px;
-  left: 100px;
 
-}*/
+.gameWinner{
+  position: absolute;
+  text-align: center;
+  font-size: 30px;
+  border: none;
+  background-color: rgba(50, 50, 150, 0.75);
+  top: 250px;
+  left: 100px;
+  width: 400px;
+  color: white;
+}
+
+.matchMessage{
+  font-size: 30px;
+  background-color: rgba(100, 180, 200, 0.8);
+
+
+}
