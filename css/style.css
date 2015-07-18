@@ -110,6 +110,19 @@ h2{
   color: white;
 }
 
+.gameDraw{
+  position: absolute;
+  text-align: center;
+  font-size: 30px;
+  border: none;
+  background-color: rgba(50, 150, 50, 0.75);
+  top: 250px;
+  left: 100px;
+  width: 400px;
+  color: white;
+}
+
+
 .matchMessage{
   font-size: 30px;
   background-color: rgba(100, 180, 200, 0.8);
