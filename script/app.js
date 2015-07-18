@@ -170,6 +170,7 @@ var game = {
       $('#p1-match').html(playerName + " WINS!");
       $('#p2-reset').html("<button class='playAgain'>PLAY AGAIN</button>");
       game.counter = 1; //switches starting player2
+      game.winStatusToggle(true);
       if (game.player1.score < game.setRound){
         $( '#p2-reset' ).show( 1000 );
       } 
@@ -179,6 +180,7 @@ var game = {
       $('#p2-match').html(playerName + " WINS!");
       $('#p1-reset').html("<button class='playAgain'>PLAY AGAIN</button>");
       game.counter = 0; //switches starting player1
+      game.winStatusToggle(true);
       if (game.player2.score < game.setRound){  
         $( '#p1-reset' ).show( 1000 );
       }
@@ -190,6 +192,7 @@ var game = {
     $('.gameWinner').html
      ("<div>CLICK HERE FOR NEXT ROUND</div>");
     $('.gameWinner').show(1000);
+    game.winStatusToggle(true);
   },
 
   renderDraw: function(){
@@ -198,7 +201,25 @@ var game = {
 
   },
 
-  //nty
+  // winStatusToggle: function (status) {
+  //   if (status === true){
+  //       $('.matrix').attr('disabled', true);
+  //   } else {
+  //       $('matrix').removeAttr('disabled');
+  //   }   
+  // },
+  winStatusToggle: function(status){
+    var nodes = document.getElementById("board").getElementsByTagName('div');
+    for(var i = 0; i < nodes.length; i++){
+      if (status === true){
+        nodes[i].disabled = true;
+      }else{
+         nodes[i].disabled = false;
+      }
+    }
+  }, //end of winStatusToggle
+
+  //
   checkWinner: function(){
     if (game.player1.score === game.setRound){
       game.renderGameWin(game.player1.name);
@@ -236,6 +257,7 @@ var game = {
     game.player2.score = 0;
     game.moveCounter = 0;
     game.moves = [];
+    game.winStatusToggle(false);
   },
 
   matchReset: function(){
@@ -247,6 +269,7 @@ var game = {
     $('#p2-match').html("slave");
     $( '.resetBtn' ).hide( 1000 );
     game.moveCounter = 0;
+    game.winStatusToggle(false);
   },
 
   init: function(){
