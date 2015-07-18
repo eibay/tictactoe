@@ -344,19 +344,24 @@ window.onload = function() {
   $(document).ready(function(){
     // $( "#board" ).animate({ "height": "+=600px" }, 2500 );
 
-  $("#board").animate({
+    $("#board").animate({
 
-  }, 1000, "linear", function() {
-    $('#player1').fadeIn(3000);
-    $('#player2').fadeIn(3000);
-    $( "#player1" ).animate({ "left": "-=300px" }, 2000 );
-    $( "#player2" ).animate({ "right": "-=300px" }, 2000 );
-  });
-    $('#board').fadeIn(4000).animate({
+    }, 1000, "linear", function(){
+      $('#player1').fadeIn(3000);
+      $('#player2').fadeIn(3000);
+      $( "#player1" ).animate({ "left": "-=315px" }, 2000 );
+      $( "#player2" ).animate({ "right": "-=315px" }, 2000 );
+      $( "#player1" ).animate({ "top": "+=100px" }, 500 );
+      $( "#player2" ).animate({ "top": "+=100px" }, 500 );
+      $( "#player1" ).animate({ "top": "-=100px" }, 3500 );
+      $( "#player2" ).animate({ "top": "-=100px" }, 3500 );
+    });
+    
+    $('#board').fadeIn(5000).animate({
       opacity: 0.8,
-    }, 2000 );
-
- 
-  });
+    }, 4000 );
+    
+  
+  }); //end of document ready
 
 } //end of window onload
