@@ -196,8 +196,8 @@ var game = {
   },
 
   renderDraw: function(){
-    $('.gameWinner').html("<div>IT'S A DRAW!</div><div><buttonclass='playAgain'>Play Again</button></div>");
-    $('.gameWinner').show(1000);
+    $('.gameDraw').html("<div>IT'S A DRAW!</div><div><buttonclass='playAgain'>Play Again</button></div>");
+    $('.gameDraw').show(1000);
 
   },
 
@@ -312,11 +312,15 @@ window.onload = function() {
     game.matchReset();
   });
 
-  $('.gameWinner' ).click(function(){
+  $('.gameWinner').click(function(){
     game.gameReset();
     $('.gameWinner').hide(1000);
   });
 
+  $('.gameDraw').click(function(){
+    game.matchReset();
+    $('.gameDraw').hide(1000);
+  });
   //animates the slow appearance of the matrix board
   $(document).ready(function(){
  
