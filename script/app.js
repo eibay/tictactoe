@@ -322,8 +322,6 @@ window.onload = function() {
     $('.gameWinner').hide(1000);
   });
 
-<<<<<<< HEAD
-=======
   //animates the slow appearance of the matrix board
   $(document).ready(function(){
  
@@ -332,7 +330,6 @@ window.onload = function() {
     }, 3000 );
  
   });
->>>>>>> master
 
 } //end of window onload
 
