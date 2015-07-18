@@ -330,7 +330,7 @@ window.onload = function() {
  
   });
 
-} //end of window onload
+} // window onload
 
 
 
