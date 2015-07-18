@@ -342,10 +342,20 @@ window.onload = function() {
   });
   //animates the slow appearance of the matrix board
   $(document).ready(function(){
- 
-    $('#board').fadeIn(3000).animate({
+    // $( "#board" ).animate({ "height": "+=600px" }, 2500 );
+
+  $("#board").animate({
+
+  }, 1000, "linear", function() {
+    $('#player1').fadeIn(3000);
+    $('#player2').fadeIn(3000);
+    $( "#player1" ).animate({ "left": "-=300px" }, 2000 );
+    $( "#player2" ).animate({ "right": "-=300px" }, 2000 );
+  });
+    $('#board').fadeIn(4000).animate({
       opacity: 0.8,
     }, 2000 );
+
  
   });
 
