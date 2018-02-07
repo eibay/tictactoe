@@ -16,5 +16,6 @@ Here are few challenges which requires careful consideration during the initial 
 - validation of winner per match requires 8 probability positions
 
 You can see it live here: 
-http://eibay.herokuapp.com/game
+http://www.eibayan.com/game
+
 
